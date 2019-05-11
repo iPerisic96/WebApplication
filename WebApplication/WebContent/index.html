@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Web project</title>
+		<script type="text/javascript"
+			src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js">
+		</script>
+		 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+		<link rel="stylesheet" href="style.css">
+		<script type="text/javascript" src="main.js"></script>
+	</head>
+	<body ng-app="myApp" onload="initCart()">
+		<div ng-controller="userLogCtrl"> 
+		<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+		  <a class="navbar-brand" href="#">Wallpaper store</a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+		
+		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		    <ul class="navbar-nav mr-auto">
+		     
+		      <li class="nav-item active">
+		        <a class="nav-link" href="index.html">Home</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="authors.html">Authors</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="filter.html">Filter</a>
+		      </li>
+		    </ul>
+		    <ul class="navbar-nav navbar-nav-right">
+		    <!--<form class="form-inline my-2 my-lg-0">
+		      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+		      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		    </form>-->
+		    
+			 <li class="nav-item" ng-show="!logged">
+		        <a class="nav-link" href = "login.html">Sign In</a>
+		      </li>
+		      <li ng-show="logged" class="nav-item">
+		      	<a class="nav-link" href = "" ng-click="logout()">Sign Out</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="register.html">Join</a>
+		      </li>
+		      <li class="nav-item">
+				<a class="nav-link" href="cart.html"><i class="fas fa fa-shopping-basket"></i></a>
+			</li>
+			<li class="nav-item" ng-show="logged">
+				<a class="nav-link" href="profile.html"><i class="fas fa-user"></i></a>
+			</li>
+		      </ul>
+		  </div>
+		</nav>
+	</div>
+	<br/>
+	
+		<div class="jumbotron vertical-center">
+       		<div class="container">
+         		<h1 class="display-3">Wallpaper Store</h1>
+          		<p>We've got a huge colletion of photos. Give it a shot and search whatever you like.</p>
+          		<div class="row justify-content-center">
+          			<div class="input-group col-md-6 text-center">
+           				<input class="form-control py-2 border-right-0 border" type="search" placeholder="Search..." id="example-search-input">
+            			<span class="input-group-append">
+                			<button class="btn btn-outline-secondary" type="button">
+                    			<i class="fa fa-search"></i>
+               				</button>
+              			</span>
+        			</div>
+        		</div>
+      		</div>
+      	</div>
+		<div ng-controller="photoCtrl as c" class="container">
+		 <!-- Main jumbotron for a primary marketing message or call to action -->
+			<br />
+			<div class="card-columns">
+			<div ng-repeat="p in c.photos">
+				<div class="card" >
+				<img class="card-img-top" data-ng-src="{{p.path}}" alt="Uh oh, error occured!" style="width:100%">
+    			<div class="card-body">
+      				<h4 class="card-title">{{p.photo_name}}</h4>
+      				<p class="card-text">USER: {{p.user_id}}</p>
+      				<p class="card-text">PRICE: {{p.price}}</p>
+      				<button class="btn btn-primary" ng-click="c.addToCart($index)">Add to cart</button>
+    		    </div>
+      		 </div>	
+      		 </div>
+      		 </div>
+      		 <br />	
+      		 <div style="text-align:center">
+				<!-- <button ng-click="c.prev()">Prev</button><input type="number" ng-model="c.page_nr"><button ng-click="c.next()">Next</button>-->
+				<nav aria-label="Page navigation example">
+					  <ul class="pagination justify-content-center">
+					    <li class="page-item">
+					      <a class="page-link" ng-click="c.prev()" tabindex="-1">Previous</a>
+					    </li>
+					    <li class="page-item"><a class="page-link" href="">1</a></li>
+					    <li class="page-item"><a class="page-link" href="#">2</a></li>
+					    <li class="page-item"><a class="page-link" href="#">3</a></li>
+					    <li class="page-item">
+					      <a class="page-link" ng-click="c.next()">Next</a>
+					    </li>
+					  </ul>
+					</nav>
+			</div>
+    	</div>
+    	<br />
+    	<br />
+		
+		<script type="text/javascript">
+			initCart = function(){
+				var obj = sessionStorage.getItem('cart');
+				console.log(obj);
+				if(obj == null){
+					obj = [];
+					sessionStorage.setItem('cart', JSON.stringify(obj));
+				}
+			}
+		</script>
+	</body>
+
+</html>
